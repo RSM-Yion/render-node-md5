@@ -24,8 +24,9 @@ app.post('/sign', (req, res) => {
   res.json({ signString, signature });
 });
 
-app.listen(3000, () => {
-  console.log('✅ MD5 service running at http://localhost:3000/sign');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ MD5 service running on port ${PORT}`);
 });
 /*
 const crypto = require("crypto");
