@@ -7,7 +7,7 @@ app.use(express.json());
 app.post('/sign', (req, res) => {
   const {
     method, uri, developerId, appId,
-    appSecret, requestId, time
+    appSecret, requestId, time,content,type,effectTime,expiredTime
   } = req.body;
 
   const signString =
@@ -15,6 +15,15 @@ app.post('/sign', (req, res) => {
     `&appId=${appId}&appSecret=${appSecret}` +
     `&requestId=${requestId}&time=${time}`;
 
+  const credential = JSON.stringify({
+    content:content,  // dynamically from request
+    type:type,     // dynamically from request
+    rule: {
+      encryptedQrcode: "M",
+      effectiveTime: effectTime,   // from request
+      expiredTime: expiredTime     // from request
+    }
+  });
   const signature = crypto
     .createHash('md5')
     .update(signString, 'utf8')
@@ -28,6 +37,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ MD5 service running on port ${PORT}`);
 });
+
 /*
 const crypto = require("crypto");
 
