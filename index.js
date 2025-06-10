@@ -30,7 +30,7 @@ app.post('/sign', (req, res) => {
     .digest('hex')
     .toUpperCase();
 
-  res.json({ signString, signature });
+  res.json({ signString, signature,credential });
 });
 
 const PORT = process.env.PORT || 3000;
